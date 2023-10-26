@@ -95,7 +95,9 @@ $row = mysqli_fetch_array($result);
             <tr>
                 <th>댓글입력</th>
                 <td><?= $_SESSION['name'] ?></td>
-                <td><textarea id="comments" name="commentContents" placeholder="댓글입력"></textarea></td>
+                <td>
+                    <textarea id="comments" name="commentContents" placeholder="댓글입력"></textarea>
+                </td>
             </tr>
             <tr>
                 <?php date_default_timezone_set('Asia/Seoul'); ?>
