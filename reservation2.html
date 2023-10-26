@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>reservation</title>
+
+    <style>
+
+        table {
+            border-top: 1px solid;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 1px solid;
+            padding: 12px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>예약 등록</h1>
+</header>
+
+<main>
+    <form action="#" method="post" name="예약등록페이지">
+        <!-- submit: 폼 내용 전송, button:팝업 같은 자바스크립트 기능구현, reset: 폼 내용 삭제-->
+        <h2>
+            <button type="submit" onclick="alert('저장완료')" value="submit">저장하기</button>
+        </h2>
+
+        <table>
+            <caption style="display: none">예약 등록</caption>
+
+            <colgroup>
+                <col style="width: 200px">
+                <col style="width: 400px">
+                <col style="width: 200px">
+                <col style="width: 400px">
+                <col style="width: 200px">
+                <col style="width: 400px">
+            </colgroup>
+
+            <thead>
+            <tr style="display: none">
+                <th>타이틀</th>
+                <th>선택옵션</th>
+                <th>선택옵션</th>
+                <th>선택옵션</th>
+                <th>선택옵션</th>
+                <th>선택옵션</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <th>바운드</th>
+                <td colspan="5">
+                    <label><input type="radio" name="bound" value="인바운드" checked>인바운드</label>
+                    <label><input type="radio" name="bound" value="인트라바운드">인트라바운드</label>
+                    <label><input type="radio" name="bound" value="아웃바운드">아웃바운드</label>
+                    <label><input type="radio" name="bound" value="OTA">OTA</label>
+                </td>
+            </tr>
+
+            <tr>
+                <th>여행(행사)성격</th>
+                <td colspan="5">
+                    <label><input type="radio" name="feature" value="자유" checked>자유</label>
+                    <label><input type="radio" name="feature" value="패키지">패키지</label>
+                    <label><input type="radio" name="feature" value="인센티브">인센티브</label>
+                    <label><input type="radio" name="feature" value="골프">골프</label>
+                    <label><input type="radio" name="feature" value="기타">기타</label>
+                </td>
+            </tr>
+
+            <tr>
+                <th>여행(행사)상품</th>
+                <td colspan="5">
+                    <label><input type="checkbox" name="product-항공" value="항공" checked>항공</label>
+                    <label><input type="checkbox" name="product-호텔" value="호텔" checked>호텔</label>
+                    <label><input type="checkbox" name="product-차량" value="차량" checked>차량</label>
+                    <label><input type="checkbox" name="product-관광" value="관광">관광</label>
+                    <label><input type="checkbox" name="product-식사" value="식사">식사</label>
+                    <label><input type="checkbox" name="product-가이드" value="가이드">가이드</label>
+                    <label><input type="checkbox" name="product-쇼핑" value="쇼핑">쇼핑</label>
+                    <label><input type="checkbox" name="product-기타" value="기타">기타</label>
+                </td>
+            </tr>
+
+            <tr>
+                <th>부서</th>
+                <td>국내여행사업본부</td>
+                <th>담당자</th>
+                <td>강임선</td>
+                <th>상태</th>
+                <td>
+                    <select name="예약상태">
+                        <option value="예약상태-대기">[예약] 대기</option>
+                        <option value="예약상태-확정">[예약] 확정</option>
+                        <option value="예약상태-취소">[예약] 취소</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>여행(행사)명</th>
+                <td colspan="5">
+                    <input type="text" name="여행행사명" value=""></td>
+            </tr>
+
+            <tr>
+                <th>고객명</th>
+                <td><input type="text" name="고객명" value=""></td>
+
+                <th>고객연락처</th>
+                <td><input type="text" name="고객연락처" value=""></td>
+
+                <th>고객이메일</th>
+                <td><input type="email" name="고객이메일" value=""></td>
+            </tr>
+
+            <tr>
+                <th>인원</th>
+                <td colspan="3">
+                    <label>성인: <input type="number" name="인원" value="" style="width: 50px; height: 30px"></label>
+                    <label>청소년: <input type="number" name="인원" value="" style="width: 50px; height: 30px"></label>
+                    <label>소아: <input type="number" name="인원" value="" style="width: 50px; height: 30px"></label>
+                    <label>유아: <input type="number" name="인원" value="" style="width: 50px; height: 30px"></label>
+                </td>
+
+                <th>주요 고객층</th>
+                <td>
+                    <select name="주요고객층">
+                        <option value="주요고객층-신혼부부">신혼부부</option>
+                        <option value="주요고객층-학생">학생</option>
+                        <option value="주요고객층-주부">주부</option>
+                        <option value="주요고객층-직장인">직장인</option>
+                        <option value="주요고객층-노인">노인</option>
+                        <option value="주요고객층-공무원">공무원</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>출발 지역</th>
+                <td colspan="5">
+                    <select name="출발지역">
+                        <option value="출발지역-아시아">아시아</option>
+                        <option value="출발지역-유럽">유럽</option>
+                        <option value="출발지역-오세아니아">오세아니아</option>
+                        <option value="출발지역-아프리카">아프리카</option>
+                        <option value="출발지역-아메리카">아메리카</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>여행(행사)지역</th>
+                <td colspan="5">
+                    <select name="여행대륙명">
+                        <option value="" selected disabled>대륙명</option>
+                        <option value="여행대륙명-아시아">아시아</option>
+                        <option value="여행대륙명-유럽">유럽</option>
+                        <option value="여행대륙명-오세아니아">오세아니아</option>
+                        <option value="여행대륙명-아프리카">아프리카</option>
+                        <option value="여행대륙명-아메리카">아메리카</option>
+                    </select>
+
+                    <select name="여행나라명">
+                        <option value="" selected disabled>나라명</option>
+                        <option value="여행나라명-대한민국">대한민국</option>
+                        <option value="여행나라명-일본">일본</option>
+                        <option value="여행나라명-중국">중국</option>
+                        <option value="여행나라명-대만">대만</option>
+                        <option value="여행나라명-필리핀">필리핀</option>
+                    </select>
+
+                    <select name="여행도시명">
+                        <option value="" selected disabled>도시명</option>
+                        <option value="여행도시명-제주">제주</option>
+                        <option value="여행도시명-김포">김포</option>
+                        <option value="여행도시명-인천">인천</option>
+                    </select>
+
+                    <button type="submit" onclick="alert('추가');" value="submit">추가</button>
+                    <button type="reset" onclick="alert('삭제');" value="reset">삭제</button>
+                </td>
+            </tr>
+
+            <tr>
+                <th>도착공항</th>
+                <td colspan="5">
+                    <select name="도착공항">
+                        <option value="" selected disabled>없음</option>
+                        <option value="도착공항-김포">김포</option>
+                        <option value="도착공항-제주">제주</option>
+                        <option value="도착공항-인천">인천</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <th>출발일</th>
+                <td><input type="number" name="출발일" value=""></td>
+
+                <th>귀국일</th>
+                <td colspan="3">
+                    <input type="number" name="귀국일" value=""></td>
+            </tr>
+
+            <tr>
+                <th>고객 설정 예산가</th>
+                <td><input type="number" name="고객설정예산가" placeholder="0" value="">원</td>
+
+                <th>총 판매가<br>(수동입력)</th>
+                <td colspan="3">
+                    <input type="number" name="총 판매가" placeholder="0" value="">원</td>
+            </tr>
+
+            <tr>
+                <th>부가세</th>
+                <td colspan="5">
+                    <label><input type="radio" name="include" value="불포함" checked>불포함</label>
+                    <label><input type="radio" name="include" value="포함">포함</label>
+                </td>
+            </tr>
+
+            <tr>
+                <th>호텔</th>
+                <td>
+                    <select name="호텔">
+                        <option value="호텔-필요없음">필요없음</option>
+                        <option value="호텔-옵션1">옵션1</option>
+                        <option value="호텔-옵션2">옵션2</option>
+                    </select>
+                </td>
+
+                <th>숙박시설 수</th>
+                <td colspan="3">
+                    <input type="number" name="숙박시설 수" value=""></td>
+            </tr>
+
+            <tr>
+                <th>고객 요청사항</th>
+                <td colspan="5">
+                    <textarea placeholder="입력하세요." ></textarea>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </form>
+</main>
+</body>
+</html>
