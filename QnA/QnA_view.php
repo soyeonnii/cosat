@@ -1,32 +1,58 @@
-<?php include "header.php";
-include "dbConnect.php";
+<?php include_once "../header.php";
+include_once "../dbConnect.php";
 
 $id = $_GET['id'];
 //print_r($_GET);
 $sql = "update board set view = view + 1 where boardId = $id";
 mysqli_query($conn, $sql);
 
-$result = mysqli_query($conn, "select * from board where boardId = $id");
-$row = mysqli_fetch_array($result);
 
-?>
+//$result = mysqli_query($conn, "select * from board where boardId = $id");
+$result = mysqli_query($conn,
+    "select *, ifnull(joinId, '비회원') as memberId from ( select * from board where boardId = $id ) as t1
+        left join ( select * from member) as t2
+        on t1.memberId = t2.joinId");
 
 
-<!-- 전체공개= 모든 사용자, 비공개= 본인, 회원한테만 보이게 ? -->
+$row = mysqli_fetch_array($result); ?>
+
 
 <main>
     <h2>QnA</h2>
-    <!-- 게시글 작성자(회원) 본인한테만 수정 삭제 버튼 보이게, 하지만 비회원인 경우 본인이 쓴글이든 아니든 전부 수정 삭제 버튼 안보임 -->
 
+    <!-- 회원 본인이 쓴 글에만 수정 삭제 버튼 보임-->
     <?php
     if ($_SESSION['name'] == $row['memberId']) {
         ?>
 
-        <a href="/QnA_update.php?id=<?= $row['boardId']; ?>">수정</a>
-        <a href="/QnA_delete.php?id=<?= $row['boardId']; ?>">삭제</a>
+        <a href="../QnA/QnA_update.php?id=<?= $row['boardId']; ?>">수정</a>
+        <a href="../QnA/QnA_delete.php?id=<?= $row['boardId']; ?>">삭제</a>
+
+        <!-- 공개여부를 비공개 선택한 경우, 게시글 비밀번호 확인 후 일치시 view페이지, 불일치시 list페이지 이동 -->
+       <?php
+    } elseif ($row['privacy'] == '비공개') {
+       ?>
+        <script>
+            var pw = <?=$row['contentsPassword']?>;
+            var getPw = prompt("비밀번호 입력" + "");
+            if(pw == getPw) {
+                alert("확인완료");
+                // 이미 이전에 비밀번호 확인 받고 view페이지 노출시키는건데 또 비밀번호 입력하라고 뜸 ㅠㅠ
+                //location.replace('../QnA/QnA_view.php?id='.<?php //=$id?>//);
+            } else {
+                alert("잘못된 비밀번호 입니다");
+                location.replace('../QnA/QnA_list.php');
+            }
+        </script>
+
+        <a href="../QnA/QnA_update.php?id=<?= $row['boardId']; ?>">수정</a>
+        <a href="../QnA/QnA_delete.php?id=<?= $row['boardId']; ?>">삭제</a>
+
         <?php
     }
     ?>
+
+
     <table>
         <tr>
             <th>제목</th>
@@ -40,10 +66,11 @@ $row = mysqli_fetch_array($result);
             <th>작성일자</th>
             <td><?= $row['createAt']; ?></td>
         </tr>
-        <!-- 댓글이 달리면 자동으로 답변완료, 안달리면 답변대기 ? -->
+
         <tr>
+            <!-- 댓글이 달리면 자동으로 답변완료, 안달리면 기본값 답변대기 (depth, thread ?) -->
             <th>답변여부</th>
-            <td>답변완료</td>
+            <td><?= $row['answer'] ?></td>
 
             <th>조회수</th>
             <td><?= $row['view']; ?></td>
@@ -54,7 +81,11 @@ $row = mysqli_fetch_array($result);
         </tr>
 
         <?php
-        $sql = mysqli_query($conn, "select * from comments where boardId = $id");
+        $sql = mysqli_query($conn,
+            "select *, ifnull(joinId, '비회원') as commentName from (select * from comments where boardId = $id) as t1
+            left join (select * from member) as t2
+            on t1.commentName = t2.joinId;");
+
         while ($reply = mysqli_fetch_array($sql)) {
             ?>
             <tr>
@@ -65,7 +96,7 @@ $row = mysqli_fetch_array($result);
                 if ($_SESSION['name'] == $reply['commentName']) {
                     ?>
                     <td>
-                        <a href="reply_delete.php?replyId=<?= $reply['Id'] ?>&&boardId=<?= $reply['boardId'] ?>">댓글삭제</a>
+                        <a href="../comment/reply_delete.php?replyId=<?= $reply['Id'] ?>&&boardId=<?= $reply['boardId'] ?>">댓글삭제</a>
                     </td>
                     <?php
                 }
@@ -87,14 +118,15 @@ $row = mysqli_fetch_array($result);
             <?php
         }
         ?>
+
         <?php
         if ($login_success) {
         ?>
-        <form action="/QnA_replyOk.php" method="get" name="QnA댓글쓰기">
+        <form action="../comment/QnA_replyOk.php" method="get" name="QnA댓글쓰기">
             <input type="hidden" name="id" value="<?= $id ?>">
             <tr>
                 <th>댓글입력</th>
-                <td><?= $_SESSION['name'] ?></td>
+                <td><?= $row['memberId'] ?></td>
                 <td>
                     <textarea id="comments" name="commentContents" placeholder="댓글입력"></textarea>
                 </td>
@@ -118,5 +150,5 @@ $row = mysqli_fetch_array($result);
     </table>
 </main>
 
-<?php include "footer.php"; ?>
+<?php include_once "../footer.php"; ?>
 

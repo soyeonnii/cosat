@@ -1,6 +1,8 @@
 <?php
-include "dbConnect.php";
+include_once "../dbConnect.php";
+if(!session_id()) {
 session_start();
+
 
 $id = $_GET['id'];
 $replyContents = $_GET['commentContents'];
@@ -8,7 +10,7 @@ $replyName = $_SESSION['name'];
 date_default_timezone_set('Asia/Seoul');
 $replyDate = date('Y-m-d H:i:s');
 
-$replyUrl = '/QnA_view.php?id=' . $id;
+$replyUrl = '../QnA/QnA_view.php?id=' . $id;
 
 $query = "insert into comments(boardId,commentName,commentContents,commentAt)
 values($id,'$replyName','$replyContents','$replyDate')";
@@ -28,4 +30,6 @@ if ($result) {
 
 ?>
 
-
+<?php
+}
+?>

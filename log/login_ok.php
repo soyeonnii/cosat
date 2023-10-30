@@ -1,4 +1,4 @@
-<?php include "dbConnect.php";
+<?php include_once "../dbConnect.php";
 
 if(!session_id()) {
     session_start();
@@ -18,7 +18,7 @@ if (mysqli_num_rows($result) == 1) {
         $_SESSION['memberNum'] = $row['memberNum'];
         ?>
         <script>alert('로그인 완료');
-        location.replace("/Qna_list.php");
+        location.replace("../QnA/Qna_list.php");
         </script>
         <?php
     } else {

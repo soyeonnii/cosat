@@ -1,12 +1,11 @@
-<?php include "dbConnect.php";
-session_start();
+<?php include_once "../dbConnect.php";
 
 $memberNumber = $_POST['memberNum'];
 $updateId = $_POST['updateId'];
 $updateLiveIn = $_POST['updateLiveIn'];
 $updateSnsId = $_POST['updateSnsId'];
 
-$url = '/myPage.php?num=' . $memberNumber;
+$url = '../myPage/myPage.php?num=' . $memberNumber;
 
 $query = "update member set joinId='" . $updateId . "', liveIn='" . $updateLiveIn . "',snsId='" . $updateSnsId . "' 
 where memberNum=" . $memberNumber;

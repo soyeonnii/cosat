@@ -1,5 +1,5 @@
-<?php include "header.php";
-include "dbConnect.php";
+<?php include_once "../header.php";
+include_once "../dbConnect.php";
 
 $memberNum = $_SESSION['memberNum'];
 $result = mysqli_query($conn, "select * from member where memberNum = $memberNum");
@@ -8,7 +8,7 @@ $row = mysqli_fetch_array($result);
 
 <main>
     <h2>마이페이지</h2>
-    <form action="myPage_update_ok.php" method="post" name="myPage_update">
+    <form action="../myPage/myPage_update_ok.php" method="post" name="myPage_update">
         <input type="hidden" name="memberNum" value="<?= $row['memberNum']?>">
     <table>
         <tr>
@@ -32,4 +32,4 @@ $row = mysqli_fetch_array($result);
     </form>
 </main>
 
-<?php include "footer.php" ?>
+<?php include "../footer.php" ?>

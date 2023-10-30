@@ -1,10 +1,6 @@
 <?php
-include "dbConnect.php";
+include_once "../dbConnect.php";
 
-session_start();
-//print_r($_GET);
-//
-//die();
 $id = $_POST['id'];
 $title = $_POST['title'];
 date_default_timezone_set('Asia/Seoul');
@@ -12,7 +8,7 @@ $date = date('Y-m-d H:i:s');
 $content = $_POST['contents'];
 
 
-$url = '/QnA_view.php?id='.$id;
+$url = '../QnA/QnA_view.php?id='.$id;
 
 
 $query = "update board set title='" . $title . "', updateAt='" . $date . "',contents='" . $content . "' where boardId=" . $id;
@@ -31,5 +27,3 @@ if ($result) {
 }
 
 ?>
-
-

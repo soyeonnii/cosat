@@ -1,5 +1,5 @@
-<?php include "header.php";
-include "dbConnect.php";
+<?php include_once "../header.php";
+include_once "../dbConnect.php";
 
 $id = $_GET['id'];
 //print_r($_GET);
@@ -11,7 +11,7 @@ $row = mysqli_fetch_array($result);
 <main>
     <h2>QnA 수정</h2>
 
-    <form action="/QnA_update_ok.php" method="post" name="QnA글수정페이지">
+    <form action="../QnA/QnA_update_ok.php" method="post" name="QnA글수정페이지">
         <input type="hidden" name="id" value="<?= $row['boardId'] ?>">
 
         <table>
@@ -41,4 +41,4 @@ $row = mysqli_fetch_array($result);
 </main>
 
 
-<?php include "footer.php"; ?>
+<?php include_once "../footer.php"; ?>
