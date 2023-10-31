@@ -1,4 +1,4 @@
-<?php include_once "../dbConnect.php";
+<?php include_once "C:/Apache24/htdocs/dbConnect.php";
 
 $joinId = $_POST['joinId'];
 $joinPW = $_POST['joinPw'];
@@ -15,7 +15,7 @@ $result = $conn->query($query);
 if ($result) {
     ?>
     <script> alert('회원가입 완료');
-        location.replace("../log/login.php");
+        location.href = '/logIn/login.php';
     </script>
     <?php
 } else {

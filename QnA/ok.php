@@ -1,6 +1,5 @@
 <?php
-include_once "../dbConnect.php";
-if(!session_id()) {
+include_once "C:/Apache24/htdocs/dbConnect.php";
 session_start();
 
 //print_r($_GET);
@@ -25,20 +24,16 @@ $result = $conn->query($query);
 
 if ($result) {
     $last_uid = mysqli_insert_id($conn);
-    $url = '../QnA/QnA_view.php?id=' . $last_uid;
+    $url = '/QnA/view.php?id=' . $last_uid;
     ?>
 
     <script>
         alert("<?= "글이 등록되었습니다." ?>");
-        location.replace("<?= $url ?>");
+        location.href = '<?= $url ?>';
     </script>
     <?php
 } else {
     echo "FAIL";
 }
 
-?>
-
-<?php
-}
 ?>

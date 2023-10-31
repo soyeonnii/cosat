@@ -1,6 +1,5 @@
 <?php
-include_once "../dbConnect.php";
-if(!session_id()) {
+include_once "C:/Apache24/htdocs/dbConnect.php";
 session_start();
 
 
@@ -10,7 +9,7 @@ $replyName = $_SESSION['name'];
 date_default_timezone_set('Asia/Seoul');
 $replyDate = date('Y-m-d H:i:s');
 
-$replyUrl = '../QnA/QnA_view.php?id=' . $id;
+$replyUrl = '/QnA/view.php?id=' . $id;
 
 $query = "insert into comments(boardId,commentName,commentContents,commentAt)
 values($id,'$replyName','$replyContents','$replyDate')";
@@ -21,15 +20,11 @@ if ($result) {
     ?>
     <script>
         alert("<?= "댓글 등록완료" ?>");
-        location.replace("<?= $replyUrl ?>");
+        location.href = '<?= $replyUrl ?>';
     </script>
     <?php
 } else {
     echo "FAIL";
 }
 
-?>
-
-<?php
-}
 ?>

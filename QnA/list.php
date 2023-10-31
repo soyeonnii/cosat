@@ -1,6 +1,6 @@
 <?php
-include_once "../header.php";
-include_once "../dbConnect.php";
+include_once "C:/Apache24/htdocs/header.php";
+include_once "C:/Apache24/htdocs/dbConnect.php";
 
 //$query = "select * from board order by boardId desc ";
 
@@ -14,7 +14,7 @@ $result = mysqli_query($conn, $query);
     <h2>QnA</h2>
 
     <div>
-        <form action="../QnA/QnA_view.php" method="get">
+        <form action="/QnA/view.php" method="get">
         <select name="search">
             <option value="all">전체</option>
             <option value="name">작성자</option>
@@ -27,7 +27,7 @@ $result = mysqli_query($conn, $query);
     </div>
 
     <div>
-        <a href="../QnA/QnA_create.php" target="_self">글쓰기</a>
+        <a href="/QnA/create.php" target="_self">글쓰기</a>
     </div>
 
     <table>
@@ -47,7 +47,7 @@ $result = mysqli_query($conn, $query);
         ?>
             <tr>
                 <td><?=$row['boardId'] ?></td>
-                <td><a href="../QnA/QnA_view.php?id=<?=$row['boardId'];?>"><?= $row['title']?></a></td>
+                <td><a href="/QnA/view.php?id=<?=$row['boardId'];?>&pw_check=N"><?= $row['title']?></a></td>
                 <td><?=$row['memberId']?></td>
                 <td><?=$row['createAt']?></td>
                 <td><?=$row['answer']?></td>
@@ -62,5 +62,5 @@ $result = mysqli_query($conn, $query);
 </main>
 
 
-<?php include_once "../footer.php"; ?>
+<?php include_once "C:/Apache24/htdocs/footer.php"; ?>
 

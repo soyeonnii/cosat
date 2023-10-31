@@ -1,5 +1,5 @@
 <?php
-include_once "../dbConnect.php";
+include_once "C:/Apache24/htdocs/dbConnect.php";
 
 // 삭제 버튼 누르면 한번 더 게시글 비밀번호 확인하고 삭제
 /*$sql = "select contentsPassword from board ";
@@ -22,14 +22,14 @@ $row2 = mysqli_fetch_array($result2);
 $id = $_GET['id'];
 $query = "delete from board where boardId ='$id';";
 
-$url = '../QnA/QnA_list.php';
+$url = '/QnA/list.php';
 $result = $conn->query($query);
 
 if ($result) {
     ?>
     <script>
         alert("<?= "삭제완료" ?>");
-        location.replace("<?= $url ?>");
+        location.href = '<?= $url ?>';
     </script>
     <?php
 } else {

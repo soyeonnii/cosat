@@ -1,5 +1,5 @@
 <?php
-include_once "../dbConnect.php";
+include_once "C:/Apache24/htdocs/dbConnect.php";
 
 //댓글 삭제 후 받아올 url에서 boardID필요하니까 같이 넘겨주고 받아옴
 $boardId = $_GET['boardId'];
@@ -8,14 +8,14 @@ $boardId = $_GET['boardId'];
 $replyId = $_GET['replyId'];
 $query = "delete from comments where Id = '$replyId'";
 
-$url = '../QnA/QnA_view.php?id='.$boardId;
+$url = '/QnA/view.php?id='.$boardId;
 $result = $conn->query($query);
 
 if ($result) {
     ?>
     <script>
         alert("<?= "댓글 삭제완료" ?>");
-        location.replace("<?= $url ?>");
+        location.href = '<?= $url ?>';
     </script>
     <?php
 } else {

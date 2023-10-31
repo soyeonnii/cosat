@@ -1,5 +1,5 @@
-<?php include_once "../header.php";
-include_once "../dbConnect.php";
+<?php include_once "C:/Apache24/htdocs/header.php";
+include_once "C:/Apache24/htdocs/dbConnect.php";
 
 $id = $_GET['id'];
 //print_r($_GET);
@@ -9,10 +9,11 @@ mysqli_query($conn, $sql);
 
 //$result = mysqli_query($conn, "select * from board where boardId = $id");
 $result = mysqli_query($conn,
-    "select *, ifnull(joinId, '비회원') as memberId from ( select * from board where boardId = $id ) as t1
-        left join ( select * from member) as t2
-        on t1.memberId = t2.joinId");
-
+    /*   "select *, ifnull(joinId, '비회원') as memberId from ( select * from board where boardId = $id ) as board
+            left join ( select joinId from member) as member
+            on board.memberId = member.joinId");*/
+    "select *, ifnull(joinId, '비회원') as memberId from ( select * from board where boardId = $id) as board 
+    left join member on board.memberId = member.joinId");
 
 $row = mysqli_fetch_array($result); ?>
 
@@ -25,30 +26,30 @@ $row = mysqli_fetch_array($result); ?>
     if ($_SESSION['name'] == $row['memberId']) {
         ?>
 
-        <a href="../QnA/QnA_update.php?id=<?= $row['boardId']; ?>">수정</a>
-        <a href="../QnA/QnA_delete.php?id=<?= $row['boardId']; ?>">삭제</a>
+        <a href="/QnA/update.php?id=<?= $row['boardId']; ?>">수정</a>
+        <a href="/QnA/delete.php?id=<?= $row['boardId']; ?>">삭제</a>
 
-        <!-- 공개여부를 비공개 선택한 경우, 게시글 비밀번호 확인 후 일치시 view페이지, 불일치시 list페이지 이동 -->
-       <?php
+    <?php
     } elseif ($row['privacy'] == '비공개') {
-       ?>
+        if ($_GET['pw_check'] == 'N') {
+    ?>
         <script>
             var pw = <?=$row['contentsPassword']?>;
             var getPw = prompt("비밀번호 입력" + "");
-            if(pw == getPw) {
+            if (pw == getPw) {
                 alert("확인완료");
-                // 이미 이전에 비밀번호 확인 받고 view페이지 노출시키는건데 또 비밀번호 입력하라고 뜸 ㅠㅠ
-                //location.replace('../QnA/QnA_view.php?id='.<?php //=$id?>//);
+                // 확인완료 하고 다시 view로 돌아갈때 비번 또 확인 매우 귀찮 .. 없애는 법 ?
             } else {
                 alert("잘못된 비밀번호 입니다");
-                location.replace('../QnA/QnA_list.php');
+                location.href = '/QnA/list.php';
             }
         </script>
 
-        <a href="../QnA/QnA_update.php?id=<?= $row['boardId']; ?>">수정</a>
-        <a href="../QnA/QnA_delete.php?id=<?= $row['boardId']; ?>">삭제</a>
+        <a href="/QnA/update.php?id=<?= $row['boardId']; ?>">수정</a>
+        <a href="/QnA/delete.php?id=<?= $row['boardId']; ?>">삭제</a>
 
         <?php
+    }
     }
     ?>
 
@@ -82,9 +83,9 @@ $row = mysqli_fetch_array($result); ?>
 
         <?php
         $sql = mysqli_query($conn,
-            "select *, ifnull(joinId, '비회원') as commentName from (select * from comments where boardId = $id) as t1
-            left join (select * from member) as t2
-            on t1.commentName = t2.joinId;");
+            "select *, ifnull(joinId, '비회원') as commentName from (select * from comments where boardId = $id) as comments
+            left join (select joinId from member) as member
+            on comments.commentName = member.joinId;");
 
         while ($reply = mysqli_fetch_array($sql)) {
             ?>
@@ -96,7 +97,7 @@ $row = mysqli_fetch_array($result); ?>
                 if ($_SESSION['name'] == $reply['commentName']) {
                     ?>
                     <td>
-                        <a href="../comment/reply_delete.php?replyId=<?= $reply['Id'] ?>&&boardId=<?= $reply['boardId'] ?>">댓글삭제</a>
+                        <a href="/comment/delete.php?replyId=<?= $reply['Id'] ?>&&boardId=<?= $reply['boardId'] ?>">댓글삭제</a>
                     </td>
                     <?php
                 }
@@ -122,7 +123,7 @@ $row = mysqli_fetch_array($result); ?>
         <?php
         if ($login_success) {
         ?>
-        <form action="../comment/QnA_replyOk.php" method="get" name="QnA댓글쓰기">
+        <form action="/comment/replyOk.php" method="get" name="QnA댓글쓰기">
             <input type="hidden" name="id" value="<?= $id ?>">
             <tr>
                 <th>댓글입력</th>
@@ -150,5 +151,5 @@ $row = mysqli_fetch_array($result); ?>
     </table>
 </main>
 
-<?php include_once "../footer.php"; ?>
+<?php include_once "C:/Apache24/htdocs/footer.php"; ?>
 

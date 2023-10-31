@@ -1,10 +1,9 @@
 <?php
-if(!session_id()) {
-    session_start();
-}
+
+session_start();
 session_destroy(); ?>
 <script>
     alert('로그아웃 되었습니다.')
-    location.replace("../QnA/Qna_list.php");
+    location.href = '/QnA/list.php';
 </script>
 

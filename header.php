@@ -1,8 +1,8 @@
 <?php
 
-if(!session_id()) {
-    session_start();
+session_start();
 
+$login_success = FALSE;
 if (isset($_SESSION['name'])) {
     $login_success = TRUE;
 }
@@ -64,28 +64,24 @@ if (isset($_SESSION['name'])) {
             if ($login_success) {
                 ?>
                 <p><?= $_SESSION['name'] . '님' ?></p>
-                <a href="../myPage/myPage.php">마이페이지</a>
-                <a href="../log/logout.php">로그아웃</a>
+                <a href="/myPage/index.php">마이페이지</a>
+                <a href="/logIn/logout.php">로그아웃</a>
                 <?php
             } else {
             ?>
-            <a href="../log/login.php">로그인</a>
-            <a href="../join/join.php">회원가입</a>
-            <a href="../myPage/myPage.php">마이페이지</a>
+            <a href="/logIn/login.php">로그인</a>
+            <a href="/join/join.php">회원가입</a>
+            <a href="/myPage/index.php">마이페이지</a>
         </div>
         <?php
         }
         ?>
         <nav>
             <ul class="naviBar">
-                <li><a href="../QnA/QnA_list.php">QnA</a></li>
+                <li><a href="/QnA/list.php">QnA</a></li>
                 <li><a href="#가입신청">가입신청</a></li>
                 <li><a href="#최근활동">최근활동</a></li>
             </ul>
         </nav>
     </div>
 </header>
-
-<?php
-}
-?>

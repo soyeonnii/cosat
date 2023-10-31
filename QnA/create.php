@@ -1,8 +1,10 @@
-<?php include_once "../header.php"; ?>
+<?php include_once "C:/Apache24/htdocs/header.php";
+
+?>
 
     <main>
         <h2>QnA</h2>
-        <form action="../QnA/QnA_ok.php" method="post" name="QnA글쓰기페이지">
+        <form action="/QnA/ok.php" method="post" name="QnA글쓰기페이지">
             <table>
                 <tr>
                     <th>제목</th>
@@ -51,7 +53,7 @@
                     ?>
                 </tr>
                 <tr>
-                    <!-- 입력값이 없어도 등록가능하게 ? -->
+                    <!-- 입력값이 없어도 등록가능하게 ? or 공개여부를 전체공개 선택시 비밀번호input안뜨고, 비공개선택시 비밀번호input뜨게? -->
                     <th>비밀번호</th>
                     <td><input type="number" name="password" value=""></td>
                 </tr>
@@ -61,4 +63,4 @@
     </main>
 
 
-<?php include_once "../footer.php"; ?>
+<?php include_once "C:/Apache24/htdocs/footer.php"; ?>

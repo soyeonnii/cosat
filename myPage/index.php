@@ -1,5 +1,5 @@
-<?php include_once "../header.php";
-include_once "../dbConnect.php";
+<?php include_once "C:/Apache24/htdocs/header.php";
+include_once "C:/Apache24/htdocs/dbConnect.php";
 
 if ($login_success) {
 
@@ -10,7 +10,7 @@ if ($login_success) {
     <main>
         <h2>마이페이지</h2>
         <!-- 수정버튼 누르면 비밀번호 인증 한번더 .. ? -->
-        <button type="button" onclick="location.href='../myPage/myPage_update.php'">수정</button>
+        <button type="button" onclick="location.href='/myPage/update.php'">수정</button>
         <table>
             <tr>
                 <th>ID</th>
@@ -35,7 +35,7 @@ if ($login_success) {
     ?>
     <script>
         alert('로그인이 필요합니다');
-        location.replace("../log/login.php");
+        location.href = '/logIn/login.php';
     </script>
     <?php
 }
