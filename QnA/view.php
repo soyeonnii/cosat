@@ -31,14 +31,13 @@ $row = mysqli_fetch_array($result); ?>
 
     <?php
     } elseif ($row['privacy'] == '비공개') {
-        if ($_GET['pw_check'] == 'N') {
+    if ($_GET['pw_check'] == 'N') {
     ?>
         <script>
             var pw = <?=$row['contentsPassword']?>;
             var getPw = prompt("비밀번호 입력" + "");
             if (pw == getPw) {
                 alert("확인완료");
-                // 확인완료 하고 다시 view로 돌아갈때 비번 또 확인 매우 귀찮 .. 없애는 법 ?
             } else {
                 alert("잘못된 비밀번호 입니다");
                 location.href = '/QnA/list.php';
@@ -52,7 +51,6 @@ $row = mysqli_fetch_array($result); ?>
     }
     }
     ?>
-
 
     <table>
         <tr>
@@ -68,10 +66,29 @@ $row = mysqli_fetch_array($result); ?>
             <td><?= $row['createAt']; ?></td>
         </tr>
 
+        <?php
+
+        $sql = mysqli_query($conn,
+            "select *, ifnull(memberId, '비회원') as commentName from (select * from comments where boardId = $id) as comments
+           left join (select memberId from board) as board on comments.commentName = board.memberId");
+
+        $reply = mysqli_fetch_array($sql);
+        ?>
+
         <tr>
-            <!-- 댓글이 달리면 자동으로 답변완료, 안달리면 기본값 답변대기 (depth, thread ?) -->
+            <!-- 댓글이 달리면 자동으로 답변완료, 안달리면 기본값 답변대기 -->
             <th>답변여부</th>
-            <td><?= $row['answer'] ?></td>
+            <?php
+            if ($reply['Id']) {
+                ?>
+                <td>답변완료</td>
+                <?php
+            } else {
+                ?>
+                <td>답변대기</td>
+                <?php
+            }
+            ?>
 
             <th>조회수</th>
             <td><?= $row['view']; ?></td>
@@ -82,11 +99,6 @@ $row = mysqli_fetch_array($result); ?>
         </tr>
 
         <?php
-        $sql = mysqli_query($conn,
-            "select *, ifnull(joinId, '비회원') as commentName from (select * from comments where boardId = $id) as comments
-            left join (select joinId from member) as member
-            on comments.commentName = member.joinId;");
-
         while ($reply = mysqli_fetch_array($sql)) {
             ?>
             <tr>
@@ -107,10 +119,23 @@ $row = mysqli_fetch_array($result); ?>
                 <th>댓글 작성시간</th>
                 <td><?= $reply['commentAt'] ?></td>
             </tr>
+
+
             <tr>
-                <th>좋아요</th>
-                <td><?= $reply['commentGood'] ?></td>
+                <!-- 댓글 좋아요 버튼 클릭시 좋아요 수 자동으로 + 1, 취소가능 ? -->
+                <?php
+                /* $login_user = $_SESSION['name'];
+                $good_sql = "select * from comments where commentName = '$login_user'";
+                $good_result = mysqli_query($conn, $good_sql);
+                $good_row = mysqli_fetch_array($good_result);
+                $good = $good_row['commentGood'];
+
+                // 1이면 색깔 칠해져 있는 하트, 0이면 빈 하얀 하트 출력?
+                if($good)
+                 */ ?>
+                <!-- <script src="https://kit.fontawesome.com/6478f529f2.js" crossorigin="anonymous"></script> -->
             </tr>
+
 
             <tr>
                 <th>댓글내용</th>
@@ -121,13 +146,13 @@ $row = mysqli_fetch_array($result); ?>
         ?>
 
         <?php
-        if ($login_success) {
+        if ($_SESSION['memberNum']) {
         ?>
         <form action="/comment/replyOk.php" method="get" name="QnA댓글쓰기">
             <input type="hidden" name="id" value="<?= $id ?>">
             <tr>
                 <th>댓글입력</th>
-                <td><?= $row['memberId'] ?></td>
+                <td><?= $_SESSION['name'] ?></td>
                 <td>
                     <textarea id="comments" name="commentContents" placeholder="댓글입력"></textarea>
                 </td>
